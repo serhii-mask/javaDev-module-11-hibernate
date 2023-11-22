@@ -1,0 +1,19 @@
+CREATE TABLE IF NOT EXISTS clients (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(200) NOT NULL CHECK (LENGTH(name) BETWEEN 3 AND 200),
+	UNIQUE (id)
+);
+
+CREATE TABLE IF NOT EXISTS planets (
+	id VARCHAR(10) PRIMARY KEY CHECK (id ~ '^[A-Z0-9]+$'),
+	name VARCHAR(500) NOT NULL CHECK (LENGTH(name) BETWEEN 1 AND 500)
+);
+
+--CREATE TABLE IF NOT EXISTS tickets (
+--	id SERIAL PRIMARY KEY,
+--	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--	client_id INTEGER REFERENCES clients(id),
+--	from_planet_id VARCHAR(10) REFERENCES planets(id),
+--	to_planet_id VARCHAR(10) REFERENCES planets(id),
+--	UNIQUE (id)
+--);
