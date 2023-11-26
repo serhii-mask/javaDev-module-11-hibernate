@@ -3,18 +3,19 @@ package org.example.repository.planet;
 import org.example.entities.Planet;
 import org.example.entities.Ticket;
 import org.example.hibernate.HibernateUtils;
+import org.example.repository.GenericDao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 import java.util.Objects;
 
-public class PlanetCrudService implements PlanetDao {
+public class PlanetCrudService implements GenericDao<Planet> {
 
     private static final String GET_ALL_PLANET_QUERY = "FROM Planet";
 
     @Override
-    public boolean createPlanet(Planet planet) {
+    public boolean create(Planet planet) {
         boolean result = false;
 
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
@@ -34,7 +35,7 @@ public class PlanetCrudService implements PlanetDao {
     }
 
     @Override
-    public boolean updatePlanet(Planet planet) {
+    public boolean update(Planet planet) {
         boolean result = false;
 
         if (Objects.isNull(planet.getId())) {
@@ -58,7 +59,9 @@ public class PlanetCrudService implements PlanetDao {
     }
 
     @Override
-    public Planet getPlanetById(String planetId) {
+    public Planet getById(Object id) {
+        String planetId = (String) id;
+
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Planet planet = session.get(Planet.class, planetId);
 
@@ -70,14 +73,16 @@ public class PlanetCrudService implements PlanetDao {
     }
 
     @Override
-    public List<Planet> getAllPlanets() {
+    public List<Planet> getAll() {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             return session.createQuery(GET_ALL_PLANET_QUERY, Planet.class).list();
         }
     }
 
     @Override
-    public void deletePlanetById(String planetId) {
+    public void deleteById(Object id) {
+        String planetId = (String) id;
+
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Planet existing = session.get(Planet.class, planetId);
@@ -87,7 +92,7 @@ public class PlanetCrudService implements PlanetDao {
     }
 
     @Override
-    public void deletePlanet(Planet planet) {
+    public void delete(Planet planet) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.remove(planet);

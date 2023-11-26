@@ -3,18 +3,19 @@ package org.example.repository.client;
 import org.example.entities.Client;
 import org.example.entities.Ticket;
 import org.example.hibernate.HibernateUtils;
+import org.example.repository.GenericDao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 import java.util.Objects;
 
-public class ClientCrudService implements ClientDao {
+public class ClientCrudGeneric implements GenericDao<Client> {
 
     private static final String GET_ALL_CLIENT_QUERY = "FROM Client";
 
     @Override
-    public boolean createClient(Client client) {
+    public boolean create(Client client) {
         boolean result = false;
 
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
@@ -35,7 +36,7 @@ public class ClientCrudService implements ClientDao {
     }
 
     @Override
-    public boolean updateClient(Client client) {
+    public boolean update(Client client) {
         boolean result = false;
 
         if (Objects.isNull(client.getId())) {
@@ -59,7 +60,9 @@ public class ClientCrudService implements ClientDao {
     }
 
     @Override
-    public Client getClientById(Long clientId) {
+    public Client getById(Object id) {
+        Long clientId = (Long) id;
+
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Client client = session.get(Client.class, clientId);
 
@@ -70,14 +73,16 @@ public class ClientCrudService implements ClientDao {
     }
 
     @Override
-    public List<Client> getAllClients() {
+    public List<Client> getAll() {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             return session.createQuery(GET_ALL_CLIENT_QUERY, Client.class).list();
         }
     }
 
     @Override
-    public void deleteClientById(Long clientId) {
+    public void deleteById(Object id) {
+        Long clientId = (Long) id;
+
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Client existing = session.get(Client.class, clientId);
@@ -87,7 +92,7 @@ public class ClientCrudService implements ClientDao {
     }
 
     @Override
-    public void deleteClient(Client client) {
+    public void delete(Client client) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.remove(client);

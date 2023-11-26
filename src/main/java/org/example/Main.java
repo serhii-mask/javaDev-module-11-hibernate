@@ -3,7 +3,8 @@ package org.example;
 import org.example.entities.Client;
 import org.example.entities.Planet;
 import org.example.entities.Ticket;
-import org.example.repository.client.ClientCrudService;
+import org.example.hibernate.HibernateUtils;
+import org.example.repository.client.ClientCrudGeneric;
 import org.example.repository.planet.PlanetCrudService;
 import org.example.repository.ticket.TicketCrudService;
 
@@ -13,16 +14,19 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        HibernateUtils hibernateUtils = HibernateUtils.getInstance();
+        hibernateUtils.migrateDatabase();
+        hibernateUtils.closeSessionFactory();
 
-        ClientCrudService clientService = new ClientCrudService();
+        ClientCrudGeneric clientService = new ClientCrudGeneric();
         PlanetCrudService planetService = new PlanetCrudService();
         TicketCrudService ticketService = new TicketCrudService();
 
-        Client clientOne = clientService.getClientById(1L);
-        Client clientFive = clientService.getClientById(5L);
-        Planet planetAlderaan = planetService.getPlanetById("ALDERAAN");
-        Planet planetNaboo = planetService.getPlanetById("NAB007");
-        Planet planetEndor = planetService.getPlanetById("ENDOR");
+        Client clientOne = clientService.getById(1L);
+        Client clientFive = clientService.getById(5L);
+        Planet planetAlderaan = planetService.getById("ALDERAAN");
+        Planet planetNaboo = planetService.getById("NAB007");
+        Planet planetEndor = planetService.getById("ENDOR");
 
         Ticket ticketOne = new Ticket();
         ticketOne.setCreatedAt(LocalDate.now());
@@ -45,13 +49,13 @@ public class Main {
         ticketThree.setToPlanet(planetAlderaan);
         clientFive.getTickets().add(ticketThree);
 
-        List<Ticket> ticketsBeforeDelete = ticketService.getAllTickets();
+        List<Ticket> ticketsBeforeDelete = ticketService.getAll();
         System.out.println("tickets = " + ticketsBeforeDelete.toString());
 
-        ticketService.deleteTicketById(7L);
-        clientService.deleteClient(clientOne);
+        ticketService.deleteById(7L);
+        clientService.delete(clientOne);
 
-        List<Ticket> ticketsAfterDelete = ticketService.getAllTickets();
+        List<Ticket> ticketsAfterDelete = ticketService.getAll();
         System.out.println("tickets = " + ticketsAfterDelete.toString());
     }
 }

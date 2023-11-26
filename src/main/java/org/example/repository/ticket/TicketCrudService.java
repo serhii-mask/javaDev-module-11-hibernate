@@ -2,18 +2,19 @@ package org.example.repository.ticket;
 
 import org.example.entities.Ticket;
 import org.example.hibernate.HibernateUtils;
+import org.example.repository.GenericDao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
 import java.util.Objects;
 
-public class TicketCrudService implements TicketDao {
+public class TicketCrudService implements GenericDao<Ticket> {
 
     private static final String GET_ALL_TICKET_QUERY = "FROM Ticket";
 
     @Override
-    public boolean createTicket(Ticket ticket) {
+    public boolean create(Ticket ticket) {
         boolean result = false;
 
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
@@ -34,7 +35,7 @@ public class TicketCrudService implements TicketDao {
     }
 
     @Override
-    public boolean updateTicket(Ticket ticket) {
+    public boolean update(Ticket ticket) {
         boolean result = false;
 
         if (Objects.isNull(ticket.getId())) {
@@ -58,21 +59,25 @@ public class TicketCrudService implements TicketDao {
     }
 
     @Override
-    public Ticket getTicketById(Long ticketId) {
+    public Ticket getById(Object id) {
+        Long ticketId = (Long) id;
+
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             return session.get(Ticket.class, ticketId);
         }
     }
 
     @Override
-    public List<Ticket> getAllTickets() {
+    public List<Ticket> getAll() {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             return session.createQuery(GET_ALL_TICKET_QUERY, Ticket.class).list();
         }
     }
 
     @Override
-    public void deleteTicketById(Long ticketId) {
+    public void deleteById(Object id) {
+            Long ticketId = (Long) id;
+
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             Ticket existing = session.get(Ticket.class, ticketId);
@@ -82,7 +87,7 @@ public class TicketCrudService implements TicketDao {
     }
 
     @Override
-    public void deleteTicket(Ticket ticket) {
+    public void delete(Ticket ticket) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.remove(ticket);
