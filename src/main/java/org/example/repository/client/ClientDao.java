@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.repository.client;
 
 import org.example.entities.Client;
 

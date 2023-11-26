@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.repository.planet;
 
 import org.example.entities.Planet;
 

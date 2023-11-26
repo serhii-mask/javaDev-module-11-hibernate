@@ -1,6 +1,6 @@
-package org.example.repository;
+package org.example.repository.ticket;
 
-import org.example.entities.Planet;
+import org.example.entities.Ticket;
 import org.example.hibernate.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -8,19 +8,20 @@ import org.hibernate.Transaction;
 import java.util.List;
 import java.util.Objects;
 
-public class PlanetCrudService implements PlanetDao {
+public class TicketCrudService implements TicketDao {
 
-    private static final String GET_ALL_PLANET_QUERY = "FROM Planet";
+    private static final String GET_ALL_TICKET_QUERY = "FROM Ticket";
 
     @Override
-    public boolean createPlanet(Planet planet) {
+    public boolean createTicket(Ticket ticket) {
         boolean result = false;
 
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
 
             try {
-                session.persist(planet);
+                ticket.setId(null);
+                session.persist(ticket);
                 transaction.commit();
                 result = true;
             } catch (Exception e) {
@@ -33,10 +34,10 @@ public class PlanetCrudService implements PlanetDao {
     }
 
     @Override
-    public boolean updatePlanet(Planet planet) {
+    public boolean updateTicket(Ticket ticket) {
         boolean result = false;
 
-        if (Objects.isNull(planet.getId())) {
+        if (Objects.isNull(ticket.getId())) {
             return false;
         }
 
@@ -44,7 +45,7 @@ public class PlanetCrudService implements PlanetDao {
             Transaction transaction = session.beginTransaction();
 
             try {
-                session.merge(planet);
+                session.merge(ticket);
                 transaction.commit();
                 result = true;
             } catch (Exception e) {
@@ -57,34 +58,34 @@ public class PlanetCrudService implements PlanetDao {
     }
 
     @Override
-    public Planet getPlanetById(String planetId) {
+    public Ticket getTicketById(Long ticketId) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
-            return session.get(Planet.class, planetId);
+            return session.get(Ticket.class, ticketId);
         }
     }
 
     @Override
-    public List<Planet> getAllPlanets() {
+    public List<Ticket> getAllTickets() {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
-            return session.createQuery(GET_ALL_PLANET_QUERY, Planet.class).list();
+            return session.createQuery(GET_ALL_TICKET_QUERY, Ticket.class).list();
         }
     }
 
     @Override
-    public void deletePlanetById(String planetId) {
+    public void deleteTicketById(Long ticketId) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            Planet existing = session.get(Planet.class, planetId);
+            Ticket existing = session.get(Ticket.class, ticketId);
             session.remove(existing);
             transaction.commit();
         }
     }
 
     @Override
-    public void deletePlanet(Planet planet) {
+    public void deleteTicket(Ticket ticket) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.remove(planet);
+            session.remove(ticket);
             transaction.commit();
         }
     }

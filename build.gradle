@@ -14,7 +14,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
     // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
-    implementation group: 'org.flywaydb', name: 'flyway-core', version: '9.22.3'
+    implementation group: 'org.flywaydb', name: 'flyway-core', version: '9.19.1'
 
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
@@ -24,7 +24,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api
     implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.0.2'
-
 }
 
 test {
