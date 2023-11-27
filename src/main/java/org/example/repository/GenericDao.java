@@ -3,7 +3,7 @@ package org.example.repository;
 
 import java.util.List;
 
-public abstract interface GenericDao<T> {
+public interface GenericDao<T> {
     boolean create(T object);
 
     boolean update(T object);

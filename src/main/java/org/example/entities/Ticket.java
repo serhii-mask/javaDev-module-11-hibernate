@@ -39,32 +39,18 @@ public class Ticket {
         this.id = id;
     }
 
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
 
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Client getClient() {
-        return client;
-    }
 
     public void setClient(Client client) {
         this.client = client;
     }
 
-    public Planet getFromPlanet() {
-        return fromPlanet;
-    }
-
     public void setFromPlanet(Planet fromPlanet) {
         this.fromPlanet = fromPlanet;
-    }
-
-    public Planet getToPlanet() {
-        return toPlanet;
     }
 
     public void setToPlanet(Planet toPlanet) {

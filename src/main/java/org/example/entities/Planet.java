@@ -32,32 +32,12 @@ public class Planet {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Set<Ticket> getFromPlanetTickets() {
         return fromPlanetTickets;
     }
 
-    public void setFromPlanetTickets(Set<Ticket> fromPlanetTickets) {
-        this.fromPlanetTickets = fromPlanetTickets;
-    }
-
     public Set<Ticket> getToPlanetTickets() {
         return toPlanetTickets;
-    }
-
-    public void setToPlanetTickets(Set<Ticket> toPlanetTickets) {
-        this.toPlanetTickets = toPlanetTickets;
     }
 
     @Override

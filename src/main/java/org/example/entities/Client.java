@@ -3,10 +3,8 @@ package org.example.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "clients")
@@ -31,20 +29,8 @@ public class Client {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public List<Ticket> getTickets() {
         return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
     }
 
     @Override
