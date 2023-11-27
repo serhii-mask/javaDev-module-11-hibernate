@@ -49,6 +49,9 @@ public class Main {
         ticketThree.setToPlanet(planetAlderaan);
         clientFive.getTickets().add(ticketThree);
 
+        clientService.update(clientOne);
+        clientService.update(clientFive);
+
         List<Ticket> ticketsBeforeDelete = ticketService.getAll();
         System.out.println("tickets = " + ticketsBeforeDelete.toString());
 
