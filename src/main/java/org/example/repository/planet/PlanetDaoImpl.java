@@ -1,29 +1,29 @@
-package org.example.repository.client;
+package org.example.repository.planet;
 
-import org.example.entities.Client;
+import org.example.entities.Planet;
 import org.example.entities.Ticket;
 import org.example.hibernate.HibernateUtils;
 import org.example.repository.GenericDao;
 import org.hibernate.Session;
+
 import org.hibernate.Transaction;
 
 import java.util.List;
 import java.util.Objects;
 
-public class ClientCrudGeneric implements GenericDao<Client> {
+public class PlanetDaoImpl implements GenericDao<Planet, String> {
 
-    private static final String GET_ALL_CLIENT_QUERY = "FROM Client";
+    private static final String GET_ALL_PLANET_QUERY = "FROM Planet";
 
     @Override
-    public boolean create(Client client) {
+    public boolean create(Planet planet) {
         boolean result = false;
 
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
 
             try {
-                client.setId(null);
-                session.persist(client);
+                session.persist(planet);
                 transaction.commit();
                 result = true;
             } catch (Exception e) {
@@ -36,10 +36,10 @@ public class ClientCrudGeneric implements GenericDao<Client> {
     }
 
     @Override
-    public boolean update(Client client) {
+    public boolean update(Planet planet) {
         boolean result = false;
 
-        if (Objects.isNull(client.getId())) {
+        if (Objects.isNull(planet.getId())) {
             return false;
         }
 
@@ -47,7 +47,7 @@ public class ClientCrudGeneric implements GenericDao<Client> {
             Transaction transaction = session.beginTransaction();
 
             try {
-                session.merge(client);
+                session.merge(planet);
                 transaction.commit();
                 result = true;
             } catch (Exception e) {
@@ -60,42 +60,39 @@ public class ClientCrudGeneric implements GenericDao<Client> {
     }
 
     @Override
-    public Client getById(Object id) {
-        Long clientId = (Long) id;
-
+    public Planet getById(String id) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
-            Client client = session.get(Client.class, clientId);
+            Planet planet = session.get(Planet.class, id);
 
-            client.getTickets().forEach(Ticket::getId);
+            planet.getFromPlanetTickets().forEach(Ticket::getId);
+            planet.getToPlanetTickets().forEach(Ticket::getId);
 
-            return  client;
+            return planet;
         }
     }
 
     @Override
-    public List<Client> getAll() {
+    public List<Planet> getAll() {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
-            return session.createQuery(GET_ALL_CLIENT_QUERY, Client.class).list();
+            return session.createQuery(GET_ALL_PLANET_QUERY, Planet.class).list();
         }
     }
 
     @Override
-    public void deleteById(Object id) {
-        Long clientId = (Long) id;
-
+    public void deleteById(String id) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            Client existing = session.get(Client.class, clientId);
+            Planet existing = session.get(Planet.class, id);
             session.remove(existing);
             transaction.commit();
         }
     }
 
     @Override
-    public void delete(Client client) {
+    public void delete(Planet planet) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.remove(client);
+            session.remove(planet);
             transaction.commit();
         }
     }

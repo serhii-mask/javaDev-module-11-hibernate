@@ -2,16 +2,16 @@ package org.example.repository;
 
 import java.util.List;
 
-public interface GenericDao<T> {
+public interface GenericDao<T, ID> {
     boolean create(T object);
 
     boolean update(T object);
 
-    T getById(Object id);
+    T getById(ID id);
 
     List<T> getAll();
 
-    void deleteById(Object id);
+    void deleteById(ID id);
 
     void delete(T object);
 }

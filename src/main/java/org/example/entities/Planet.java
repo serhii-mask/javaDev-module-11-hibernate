@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "planets")
 public class Planet {
@@ -28,23 +30,13 @@ public class Planet {
     @OneToMany(mappedBy = "toPlanet", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ticket> toPlanetTickets = new HashSet<>();
 
-    public String getId() {
-        return id;
-    }
-
-    public Set<Ticket> getFromPlanetTickets() {
-        return fromPlanetTickets;
-    }
-
-    public Set<Ticket> getToPlanetTickets() {
-        return toPlanetTickets;
-    }
-
     @Override
     public String toString() {
         return "Planet{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", fromPlanetTickets=" + fromPlanetTickets +
+                ", toPlanetTickets=" + toPlanetTickets +
                 '}';
     }
 }

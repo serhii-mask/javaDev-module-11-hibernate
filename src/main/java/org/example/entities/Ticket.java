@@ -2,9 +2,11 @@ package org.example.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 @Entity
 @Table(name = "tickets")
 public class Ticket {
@@ -30,32 +32,6 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "to_planet_id", nullable = false)
     private Planet toPlanet;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
-    }
-
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public void setFromPlanet(Planet fromPlanet) {
-        this.fromPlanet = fromPlanet;
-    }
-
-    public void setToPlanet(Planet toPlanet) {
-        this.toPlanet = toPlanet;
-    }
 
     @Override
     public String toString() {

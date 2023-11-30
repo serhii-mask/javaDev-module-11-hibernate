@@ -2,10 +2,12 @@ package org.example.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "clients")
 public class Client {
@@ -21,23 +23,12 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> tickets = new LinkedList<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
     @Override
     public String toString() {
         return "Client{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", tickets=" + tickets +
                 '}';
     }
 }
