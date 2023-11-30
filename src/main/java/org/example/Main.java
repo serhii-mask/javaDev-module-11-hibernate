@@ -5,11 +5,11 @@ import org.example.entities.Planet;
 import org.example.entities.Ticket;
 import org.example.hibernate.HibernateUtils;
 import org.example.repository.GenericDao;
-import org.example.repository.client.ClientCrudService;
+import org.example.service.client.ClientCrudService;
 import org.example.repository.client.ClientDaoImpl;
-import org.example.repository.planet.PlanetCrudService;
+import org.example.service.planet.PlanetCrudService;
 import org.example.repository.planet.PlanetDaoImpl;
-import org.example.repository.ticket.TicketCrudService;
+import org.example.service.ticket.TicketCrudService;
 import org.example.repository.ticket.TicketDaoImpl;
 
 import java.time.LocalDate;

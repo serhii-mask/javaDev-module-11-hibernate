@@ -1,4 +1,4 @@
-package org.example.repository.client;
+package org.example.service.client;
 
 import org.example.entities.Client;
 import org.example.repository.GenericDao;

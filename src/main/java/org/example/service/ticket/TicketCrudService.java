@@ -1,4 +1,4 @@
-package org.example.repository.ticket;
+package org.example.service.ticket;
 
 import org.example.entities.Ticket;
 import org.example.repository.GenericDao;

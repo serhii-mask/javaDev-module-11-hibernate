@@ -1,4 +1,4 @@
-package org.example.repository.planet;
+package org.example.service.planet;
 
 import org.example.entities.Planet;
 import org.example.repository.GenericDao;
